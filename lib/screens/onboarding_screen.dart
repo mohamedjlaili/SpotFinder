@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'home_screen.dart';
+import 'login_screen.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({Key? key}) : super(key: key);
@@ -23,7 +23,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     {
       'image': 'assets/images/onboarding_2.png',
       'title': 'Discover & Book\nSpaces',
-      'description': 'Easily find and\nreserve a quiet place\nto study or work',
+      'description': 'Easily find and reserve\na quiet place to study or work',
       'highlight': 'reserve',
     },
     {
@@ -36,7 +36,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   void _onSkip() {
     Navigator.of(context).pushReplacement(
-      MaterialPageRoute(builder: (context) => const HomeScreen()),
+      MaterialPageRoute(builder: (context) => const LoginScreen()),
     );
   }
 
@@ -47,8 +47,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         curve: Curves.easeIn,
       );
     } else {
+      // Navigate to Login Screen
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => const HomeScreen()),
+        MaterialPageRoute(builder: (context) => const LoginScreen()),
       );
     }
   }
@@ -95,12 +96,22 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   children: [
                     // Skip Button
                     if (_currentPage != _onboardingData.length - 1)
-                      TextButton(
+                      ElevatedButton(
                         onPressed: _onSkip,
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.red,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(22),
+                          ),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 24,
+                            vertical: 10,
+                          ),
+                        ),
                         child: Text(
                           'Skip',
                           style: GoogleFonts.poppins(
-                            color: Colors.white70,
+                            color: Colors.white,
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
                           ),
@@ -114,13 +125,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         _onboardingData.length,
                         (index) => Container(
                           margin: const EdgeInsets.symmetric(horizontal: 4),
-                          width: _currentPage == index ? 20 : 8,
-                          height: 8,
+                          width: _currentPage == index ? 10 : 8,
+                          height: _currentPage == index ? 10 : 8,
                           decoration: BoxDecoration(
+                            shape: BoxShape.circle,
                             color: _currentPage == index
-                                ? const Color(0xFF3F51B5) // Active dot color
+                                ? const Color(0xFF3B82F6) // Active dot color
                                 : Colors.white24,
-                            borderRadius: BorderRadius.circular(4),
                           ),
                         ),
                       ),
@@ -130,15 +141,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     ElevatedButton(
                       onPressed: _onNext,
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(
-                          0xFF3F51B5,
-                        ), // Button color
+                        backgroundColor: const Color(0xFF3B82F6),
+                        fixedSize: const Size(115, 42),
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 24,
-                          vertical: 12,
+                          borderRadius: BorderRadius.circular(22),
                         ),
                       ),
                       child: Text(
@@ -147,7 +153,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             : 'Next >',
                         style: GoogleFonts.poppins(
                           color: Colors.white,
-                          fontSize: 16,
+                          fontSize: 15,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
@@ -167,7 +173,7 @@ class OnboardingContent extends StatelessWidget {
   final String image;
   final String title;
   final String description;
-  final String highlight; // Word to highlight in blue
+  final String highlight;
 
   const OnboardingContent({
     Key? key,
@@ -182,36 +188,35 @@ class OnboardingContent extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
+        const SizedBox(height: 70),
         Expanded(
-          flex: 3,
+          flex: 5,
           child: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Image.asset(image),
+            padding: const EdgeInsets.symmetric(horizontal: 2.0),
+            child: Image.asset(image, fit: BoxFit.contain),
           ),
         ),
-        Expanded(
-          flex: 2,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: GoogleFonts.poppins(
-                    fontSize: 28,
-                    fontWeight: FontWeight.bold,
-                    color: const Color(0xFF3F51B5), // Blue title
-                    height: 1.2,
-                  ),
-                  textAlign: TextAlign.center, // Centered title based on image
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 4.10),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                title,
+                style: GoogleFonts.poppins(
+                  fontSize: 32,
+                  fontWeight: FontWeight.w700,
+                  letterSpacing: 0.3,
+                  color: const Color(0xFF3B82F6),
                 ),
-                const SizedBox(height: 16),
-                _buildRichText(description, highlight),
-              ],
-            ),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 20),
+              _buildRichText(description, highlight),
+            ],
           ),
         ),
+        const SizedBox(height: 40),
       ],
     );
   }
@@ -224,12 +229,13 @@ class OnboardingContent extends StatelessWidget {
     // Fallback if highlight not found correctly or multiple occurrences logic needed
     // For this simple case:
     return RichText(
-      textAlign: TextAlign.start,
+      textAlign: TextAlign.center,
       text: TextSpan(
         style: GoogleFonts.poppins(
-          fontSize: 18,
+          fontSize: 20,
+          fontWeight: FontWeight.bold,
+          height: 1.4,
           color: Colors.white,
-          height: 1.5,
         ),
         children: [
           if (parts.isNotEmpty) TextSpan(text: parts[0]),
@@ -237,9 +243,9 @@ class OnboardingContent extends StatelessWidget {
             TextSpan(
               text: highlight,
               style: GoogleFonts.poppins(
-                fontSize: 18,
-                color: const Color(0xFF3F51B5),
+                fontSize: 20,
                 fontWeight: FontWeight.bold,
+                color: const Color(0xFF3B82F6),
               ),
             ),
           if (parts.length > 1) TextSpan(text: parts[1]),
