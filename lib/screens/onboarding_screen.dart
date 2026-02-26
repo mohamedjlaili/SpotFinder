@@ -66,103 +66,98 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             colors: [Color(0xFF171728), Color(0xFF0A0075), Color(0xFF696969)],
           ),
         ),
-        child: SafeArea(
-          child: Column(
-            children: [
-              Expanded(
-                child: PageView.builder(
-                  controller: _pageController,
-                  onPageChanged: (index) {
-                    setState(() {
-                      _currentPage = index;
-                    });
-                  },
-                  itemCount: _onboardingData.length,
-                  itemBuilder: (context, index) => OnboardingContent(
-                    image: _onboardingData[index]['image']!,
-                    title: _onboardingData[index]['title']!,
-                    description: _onboardingData[index]['description']!,
-                    highlight: _onboardingData[index]['highlight']!,
-                  ),
+        child: Column(
+          children: [
+            Expanded(
+              child: PageView.builder(
+                controller: _pageController,
+                onPageChanged: (index) {
+                  setState(() {
+                    _currentPage = index;
+                  });
+                },
+                itemCount: _onboardingData.length,
+                itemBuilder: (context, index) => OnboardingContent(
+                  image: _onboardingData[index]['image']!,
+                  title: _onboardingData[index]['title']!,
+                  description: _onboardingData[index]['description']!,
+                  highlight: _onboardingData[index]['highlight']!,
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 20,
-                  vertical: 20,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    // Skip Button
-                    if (_currentPage != _onboardingData.length - 1)
-                      ElevatedButton(
-                        onPressed: _onSkip,
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.red,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(22),
-                          ),
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 24,
-                            vertical: 10,
-                          ),
-                        ),
-                        child: Text(
-                          'Skip',
-                          style: GoogleFonts.poppins(
-                            color: Colors.white,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      )
-                    else
-                      const SizedBox(width: 48), // Placeholder for spacing
-                    // Dots Indicator
-                    Row(
-                      children: List.generate(
-                        _onboardingData.length,
-                        (index) => Container(
-                          margin: const EdgeInsets.symmetric(horizontal: 4),
-                          width: _currentPage == index ? 10 : 8,
-                          height: _currentPage == index ? 10 : 8,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: _currentPage == index
-                                ? const Color(0xFF3B82F6) // Active dot color
-                                : Colors.white24,
-                          ),
-                        ),
-                      ),
-                    ),
-
-                    // Next/Done Button
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  // Skip Button
+                  if (_currentPage != _onboardingData.length - 1)
                     ElevatedButton(
-                      onPressed: _onNext,
+                      onPressed: _onSkip,
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFF3B82F6),
-                        fixedSize: const Size(115, 42),
+                        backgroundColor: Colors.red,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(22),
                         ),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 24,
+                          vertical: 10,
+                        ),
                       ),
                       child: Text(
-                        _currentPage == _onboardingData.length - 1
-                            ? 'Done'
-                            : 'Next >',
+                        'Skip',
                         style: GoogleFonts.poppins(
                           color: Colors.white,
-                          fontSize: 15,
+                          fontSize: 16,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
+                    )
+                  else
+                    const SizedBox(width: 48), // Placeholder for spacing
+                  // Dots Indicator
+                  Row(
+                    children: List.generate(
+                      _onboardingData.length,
+                      (index) => Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 4),
+                        width: _currentPage == index ? 10 : 8,
+                        height: _currentPage == index ? 10 : 8,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: _currentPage == index
+                              ? const Color(0xFF3B82F6) // Active dot color
+                              : Colors.white24,
+                        ),
+                      ),
                     ),
-                  ],
-                ),
+                  ),
+
+                  // Next/Done Button
+                  ElevatedButton(
+                    onPressed: _onNext,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFF3B82F6),
+                      fixedSize: const Size(115, 42),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(22),
+                      ),
+                    ),
+                    child: Text(
+                      _currentPage == _onboardingData.length - 1
+                          ? 'Done'
+                          : 'Next >',
+                      style: GoogleFonts.poppins(
+                        color: Colors.white,
+                        fontSize: 15,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

@@ -23,7 +23,8 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
+      body:SafeArea(child:  
+       Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
@@ -44,8 +45,9 @@ class _SplashScreenState extends State<SplashScreen> {
               const SizedBox(height: 20),
             ],
           ),
-        ),
+         ),
       ),
+    ),
     );
   }
 }

@@ -10,6 +10,7 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
+  final _formKey = GlobalKey<FormState>();
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -30,14 +31,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
             stops: [0.0, 0.53, 1.0],
           ),
         ),
-        child: SafeArea(
-          child: LayoutBuilder(
-            builder: (context, constraints) {
-              return SingleChildScrollView(
-                padding: const EdgeInsets.symmetric(horizontal: 24.0),
-                child: ConstrainedBox(
-                  constraints: BoxConstraints(minHeight: constraints.maxHeight),
-                  child: IntrinsicHeight(
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            return SingleChildScrollView(
+              padding: const EdgeInsets.symmetric(horizontal: 24.0),
+              child: ConstrainedBox(
+                constraints: BoxConstraints(minHeight: constraints.maxHeight),
+                child: IntrinsicHeight(
+                  child: Form(
+                    key: _formKey,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
@@ -55,9 +57,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           style: TextStyle(color: Colors.white70, fontSize: 16),
                         ),
                         const SizedBox(height: 8),
-                        TextField(
+                        TextFormField(
                           controller: _usernameController,
                           style: const TextStyle(color: Colors.white),
+                          validator: (value) {
+                            if (value == null || value.trim().isEmpty) {
+                              return 'Please enter a username';
+                            }
+                            return null;
+                          },
                           decoration: InputDecoration(
                             prefixIcon: const Icon(
                               Icons.person_outline,
@@ -79,9 +87,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           style: TextStyle(color: Colors.white70, fontSize: 16),
                         ),
                         const SizedBox(height: 8),
-                        TextField(
+                        TextFormField(
                           controller: _emailController,
                           style: const TextStyle(color: Colors.white),
+                          validator: (value) {
+                            if (value == null || value.trim().isEmpty) {
+                              return 'Please enter your email or phone number';
+                            }
+                            return null;
+                          },
                           decoration: InputDecoration(
                             prefixIcon: const Icon(
                               Icons.email_outlined,
@@ -103,10 +117,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           style: TextStyle(color: Colors.white70, fontSize: 16),
                         ),
                         const SizedBox(height: 8),
-                        TextField(
+                        TextFormField(
                           controller: _passwordController,
                           obscureText: _obscurePassword,
                           style: const TextStyle(color: Colors.white),
+                          validator: (value) {
+                            if (value == null || value.trim().isEmpty) {
+                              return 'Please enter a password';
+                            }
+                            if (value.length < 6) {
+                              return 'Password must be at least 6 characters';
+                            }
+                            return null;
+                          },
                           decoration: InputDecoration(
                             prefixIcon: const Icon(
                               Icons.lock_outline,
@@ -141,10 +164,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           style: TextStyle(color: Colors.white70, fontSize: 16),
                         ),
                         const SizedBox(height: 8),
-                        TextField(
+                        TextFormField(
                           controller: _confirmPasswordController,
                           obscureText: _obscureConfirmPassword,
                           style: const TextStyle(color: Colors.white),
+                          validator: (value) {
+                            if (value == null || value.trim().isEmpty) {
+                              return 'Please confirm your password';
+                            }
+                            if (value != _passwordController.text) {
+                              return 'Passwords do not match';
+                            }
+                            return null;
+                          },
                           decoration: InputDecoration(
                             prefixIcon: const Icon(
                               Icons.lock_outline,
@@ -193,7 +225,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         const SizedBox(height: 20),
                         ElevatedButton(
                           onPressed: () {
-                            // TODO: Implement registration logic
+                            if (_formKey.currentState!.validate()) {
+                              // TODO: Implement registration logic
+                            }
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: const Color(0xFF3B82F6),
@@ -268,9 +302,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                   ),
                 ),
-              );
-            },
-          ),
+              ),
+            );
+          },
         ),
       ),
     );

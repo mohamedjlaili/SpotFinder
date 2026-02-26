@@ -11,6 +11,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   bool _obscurePassword = true;
@@ -27,14 +28,15 @@ class _LoginScreenState extends State<LoginScreen> {
             stops: [0.0, 0.53, 1.0],
           ),
         ),
-        child: SafeArea(
-          child: LayoutBuilder(
-            builder: (context, constraints) {
-              return SingleChildScrollView(
-                padding: const EdgeInsets.symmetric(horizontal: 24.0),
-                child: ConstrainedBox(
-                  constraints: BoxConstraints(minHeight: constraints.maxHeight),
-                  child: IntrinsicHeight(
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            return SingleChildScrollView(
+              padding: const EdgeInsets.symmetric(horizontal: 24.0),
+              child: ConstrainedBox(
+                constraints: BoxConstraints(minHeight: constraints.maxHeight),
+                child: IntrinsicHeight(
+                  child: Form(
+                    key: _formKey,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
@@ -52,9 +54,15 @@ class _LoginScreenState extends State<LoginScreen> {
                           style: TextStyle(color: Colors.white70, fontSize: 16),
                         ),
                         const SizedBox(height: 8),
-                        TextField(
+                        TextFormField(
                           controller: _emailController,
                           style: const TextStyle(color: Colors.white),
+                          validator: (value) {
+                            if (value == null || value.trim().isEmpty) {
+                              return 'Please enter your email or phone number';
+                            }
+                            return null;
+                          },
                           decoration: InputDecoration(
                             prefixIcon: const Icon(
                               Icons.email_outlined,
@@ -76,10 +84,16 @@ class _LoginScreenState extends State<LoginScreen> {
                           style: TextStyle(color: Colors.white70, fontSize: 16),
                         ),
                         const SizedBox(height: 8),
-                        TextField(
+                        TextFormField(
                           controller: _passwordController,
                           obscureText: _obscurePassword,
                           style: const TextStyle(color: Colors.white),
+                          validator: (value) {
+                            if (value == null || value.trim().isEmpty) {
+                              return 'Please enter your password';
+                            }
+                            return null;
+                          },
                           decoration: InputDecoration(
                             prefixIcon: const Icon(
                               Icons.lock_outline,
@@ -132,7 +146,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         const SizedBox(height: 20),
                         ElevatedButton(
                           onPressed: () {
-                            // TODO: Implement login logic
+                            if (_formKey.currentState!.validate()) {
+                              // TODO: Implement login logic
+                            }
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: const Color(0xFF3B82F6),
@@ -219,9 +235,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                 ),
-              );
-            },
-          ),
+              ),
+            );
+          },
         ),
       ),
     );
