@@ -59,21 +59,33 @@ class _LoginScreenState extends State<LoginScreen> {
                           style: const TextStyle(color: Colors.white),
                           validator: (value) {
                             if (value == null || value.trim().isEmpty) {
-                              return 'Please enter your email or phone number';
+                              return "Email vide";
+                            }
+                            final emailRegex = RegExp(
+                              r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
+                            );
+                            if (!emailRegex.hasMatch(value)) {
+                              return "Entrer correcte email";
                             }
                             return null;
                           },
                           decoration: InputDecoration(
-                            prefixIcon: const Icon(
-                              Icons.email_outlined,
-                              color: Colors.white70,
+                            hintText: "exemple@gmail.com ",
+                            hintStyle: const TextStyle(
+                              color: Color(0xFF9CA3AF),
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                              fontFamily: 'Inter',
                             ),
-                            hintText: 'Email or Phone Number',
-                            hintStyle: const TextStyle(color: Colors.white),
+                            prefixIcon: const Icon(
+                              Icons.email,
+                              color: Color(0xFF9CA3AF),
+                            ),
                             fillColor: const Color(0xFF2A2A40),
                             filled: true,
+                            errorStyle: const TextStyle(color: Colors.orange),
                             border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(12),
+                              borderRadius: BorderRadius.circular(17),
                               borderSide: BorderSide.none,
                             ),
                           ),
@@ -90,21 +102,28 @@ class _LoginScreenState extends State<LoginScreen> {
                           style: const TextStyle(color: Colors.white),
                           validator: (value) {
                             if (value == null || value.trim().isEmpty) {
-                              return 'Please enter your password';
+                              return "enter a valid password";
                             }
                             return null;
                           },
                           decoration: InputDecoration(
+                            hintText: "Password",
+                            hintStyle: const TextStyle(
+                              color: Color(0xFF9CA3AF),
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                              fontFamily: 'Inter',
+                            ),
                             prefixIcon: const Icon(
-                              Icons.lock_outline,
-                              color: Colors.white70,
+                              Icons.lock,
+                              color: Color(0xFF9CA3AF),
                             ),
                             suffixIcon: IconButton(
                               icon: Icon(
                                 _obscurePassword
-                                    ? Icons.visibility_outlined
-                                    : Icons.visibility_off_outlined,
-                                color: Colors.white70,
+                                    ? Icons.visibility
+                                    : Icons.visibility_off,
+                                color: const Color(0xFF9CA3AF),
                               ),
                               onPressed: () {
                                 setState(() {
@@ -112,12 +131,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                 });
                               },
                             ),
-                            hintText: 'Password',
-                            hintStyle: const TextStyle(color: Colors.white),
                             fillColor: const Color(0xFF2A2A40),
                             filled: true,
+                            errorStyle: const TextStyle(color: Colors.orange),
                             border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(12),
+                              borderRadius: BorderRadius.circular(17),
                               borderSide: BorderSide.none,
                             ),
                           ),
