@@ -165,7 +165,6 @@ class _LoginScreenState extends State<LoginScreen> {
                         ElevatedButton(
                           onPressed: () {
                             if (_formKey.currentState!.validate()) {
-                              // TODO: Implement login logic
                             }
                           },
                           style: ElevatedButton.styleFrom(

@@ -9,8 +9,8 @@ class ForgotPasswordScreen extends StatefulWidget {
 }
 
 class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
-  final TextEditingController _recoveryEmailController =
-      TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+  final TextEditingController _emailController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -32,90 +32,114 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 child: ConstrainedBox(
                   constraints: BoxConstraints(minHeight: constraints.maxHeight),
                   child: IntrinsicHeight(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        Align(
-                          alignment: Alignment.topLeft,
-                          child: IconButton(
-                            icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
+                    child: Form(
+                      key: _formKey,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          Align(
+                            alignment: Alignment.topLeft,
+                            child: IconButton(
+                              icon: const Icon(
+                                Icons.arrow_back_ios,
+                                color: Colors.white,
+                              ),
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                            ),
                           ),
-                        ),
-                        const Spacer(),
-                        Center(
-                          child: Image.asset(
-                            'assets/images/logo.png',
-                            height: 150,
-                            width: 150,
+                          const Spacer(),
+                          Center(
+                            child: Image.asset(
+                              'assets/images/logo.png',
+                              height: 150,
+                              width: 150,
+                            ),
                           ),
-                        ),
-                        const SizedBox(height: 40),
-                        const Text(
-                          'Recovery Email',
-                          style: TextStyle(color: Colors.white70, fontSize: 16),
-                        ),
-                        const SizedBox(height: 8),
-                        TextField(
-                          controller: _recoveryEmailController,
-                          style: const TextStyle(color: Colors.white),
-                          decoration: InputDecoration(
-                            prefixIcon: const Icon(
-                              Icons.email_outlined,
+                          const SizedBox(height: 40),
+                          const Text(
+                            'Recovery Email',
+                            style: TextStyle(
                               color: Colors.white70,
-                            ),
-                            hintText: "What's your Email ?",
-                            hintStyle: const TextStyle(color: Colors.white),
-                            fillColor: const Color(0xFF2A2A40),
-                            filled: true,
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(12),
-                              borderSide: BorderSide.none,
+                              fontSize: 16,
                             ),
                           ),
-                        ),
-                        const SizedBox(height: 20),
-                        ElevatedButton(
-                          onPressed: () {
-                            // TODO: Implement password reset logic
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFF3B82F6),
-                            padding: const EdgeInsets.symmetric(vertical: 16),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30),
-                            ),
-                          ),
-                          child: Text(
-                            'Send Reset Link',
-                            style: GoogleFonts.poppins(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(height: 20),
-                        Align(
-                          alignment: Alignment.centerRight,
-                          child: TextButton(
-                            onPressed: () {
-                              // TODO: Implement resend functionality
+                          const SizedBox(height: 8),
+
+                          TextFormField(
+                            controller: _emailController,
+                            style: const TextStyle(color: Colors.white),
+                            validator: (value) {
+                              if (value == null || value.trim().isEmpty) {
+                                return "Email vide";
+                              }
+                              final emailRegex = RegExp(
+                                r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
+                              );
+                              if (!emailRegex.hasMatch(value)) {
+                                return "Entrer correcte email";
+                              }
+                              return null;
                             },
-                            child: const Text(
-                              'send another link ?',
-                              style: TextStyle(
-                                color: Color(0xFF3B82F6),
-                                fontSize: 14,
-                                decoration: TextDecoration.underline,
+                            decoration: InputDecoration(
+                              prefixIcon: const Icon(
+                                Icons.email_outlined,
+                                color: Colors.white70,
+                              ),
+                              hintText: "What's your Email ?",
+                              hintStyle: const TextStyle(color: Colors.white),
+                              fillColor: const Color(0xFF2A2A40),
+                              filled: true,
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(12),
+                                borderSide: BorderSide.none,
                               ),
                             ),
                           ),
-                        ),
-                        const Spacer(),
-                      ],
+                          const SizedBox(height: 20),
+                          ElevatedButton(
+                            onPressed: () {
+                              if (_formKey.currentState!.validate()) {
+                                // TODO: Implement password reset logic
+                              }
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: const Color(0xFF3B82F6),
+                              padding: const EdgeInsets.symmetric(vertical: 16),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                            ),
+                            child: Text(
+                              'Send Reset Link',
+                              style: GoogleFonts.poppins(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 20),
+                          Align(
+                            alignment: Alignment.centerRight,
+                            child: TextButton(
+                              onPressed: () {
+                                // TODO: Implement resend functionality
+                              },
+                              child: const Text(
+                                'send another link ?',
+                                style: TextStyle(
+                                  color: Color(0xFF3B82F6),
+                                  fontSize: 14,
+                                  decoration: TextDecoration.underline,
+                                ),
+                              ),
+                            ),
+                          ),
+                          const Spacer(),
+                        ],
+                      ),
                     ),
                   ),
                 ),
