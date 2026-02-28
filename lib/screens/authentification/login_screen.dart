@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'register_screen.dart';
 import 'forgot_password_screen.dart';
+import '../../utils/navigation.dart';
+import '../../utils/form_styles.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -51,7 +53,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         const SizedBox(height: 40),
                         const Text(
                           'Email',
-                          style: TextStyle(color: Colors.white70, fontSize: 16),
+                          style: TextStyle(color: Color.fromARGB(255, 255, 255, 255), fontSize: 16),
                         ),
                         const SizedBox(height: 8),
                         TextFormField(
@@ -72,18 +74,18 @@ class _LoginScreenState extends State<LoginScreen> {
                           decoration: InputDecoration(
                             hintText: "exemple@gmail.com ",
                             hintStyle: const TextStyle(
-                              color: Color(0xFF9CA3AF),
+                              color: Color.fromARGB(255, 255, 255, 255),
                               fontSize: 14,
                               fontWeight: FontWeight.w500,
                               fontFamily: 'Inter',
                             ),
                             prefixIcon: const Icon(
                               Icons.email,
-                              color: Color(0xFF9CA3AF),
+                              color: Color.fromARGB(255, 255, 255, 255),
                             ),
                             fillColor: const Color(0xFF2A2A40),
                             filled: true,
-                            errorStyle: const TextStyle(color: Colors.orange),
+                            errorStyle: FormStyles.errorTextStyle,
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(17),
                               borderSide: BorderSide.none,
@@ -93,7 +95,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         const SizedBox(height: 20),
                         const Text(
                           'Password',
-                          style: TextStyle(color: Colors.white70, fontSize: 16),
+                          style: TextStyle(color: Color.fromARGB(255, 255, 255, 255), fontSize: 16),
                         ),
                         const SizedBox(height: 8),
                         TextFormField(
@@ -109,21 +111,21 @@ class _LoginScreenState extends State<LoginScreen> {
                           decoration: InputDecoration(
                             hintText: "Password",
                             hintStyle: const TextStyle(
-                              color: Color(0xFF9CA3AF),
+                              color: Color.fromARGB(255, 255, 255, 255),
                               fontSize: 14,
                               fontWeight: FontWeight.w500,
                               fontFamily: 'Inter',
                             ),
                             prefixIcon: const Icon(
                               Icons.lock,
-                              color: Color(0xFF9CA3AF),
+                              color: Color.fromARGB(255, 255, 255, 255),
                             ),
                             suffixIcon: IconButton(
                               icon: Icon(
                                 _obscurePassword
-                                    ? Icons.visibility
-                                    : Icons.visibility_off,
-                                color: const Color(0xFF9CA3AF),
+                                    ? Icons.visibility_off
+                                    : Icons.visibility,
+                                color: const Color.fromARGB(255, 255, 255, 255),
                               ),
                               onPressed: () {
                                 setState(() {
@@ -133,7 +135,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                             fillColor: const Color(0xFF2A2A40),
                             filled: true,
-                            errorStyle: const TextStyle(color: Colors.orange),
+                            errorStyle: FormStyles.errorTextStyle,
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(17),
                               borderSide: BorderSide.none,
@@ -165,6 +167,12 @@ class _LoginScreenState extends State<LoginScreen> {
                         ElevatedButton(
                           onPressed: () {
                             if (_formKey.currentState!.validate()) {
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const Navigation(),
+                                ),
+                              );
                             }
                           },
                           style: ElevatedButton.styleFrom(

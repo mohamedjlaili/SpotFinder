@@ -12,7 +12,8 @@ class PrivacyPolicyScreen extends StatelessWidget {
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          icon: const Icon(Icons.arrow_back_ios,
+           color: Colors.white),
           onPressed: () => Navigator.of(context).pop(),
         ),
         title: Text(
@@ -107,10 +108,12 @@ class PrivacyPolicyScreen extends StatelessWidget {
                     child: Text(
                       item,
                       style: GoogleFonts.poppins(
-                        fontSize: 14,
+                        fontSize: 16,
                         color: Colors.white,
                         height: 1.5,
-                        fontWeight: isEmail ? FontWeight.bold : FontWeight.w600,
+                        fontWeight: isEmail
+                            ? FontWeight.bold
+                            : FontWeight.normal,
                       ),
                     ),
                   ),

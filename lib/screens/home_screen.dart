@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -9,9 +10,15 @@ class HomeScreen extends StatelessWidget {
       extendBodyBehindAppBar:
           true, // Optional: if you want gradient behind AppBar too
       appBar: AppBar(
-        title: const Text("Home"),
-        backgroundColor:
-            Colors.transparent, // Make inner AppBar transparent if desired
+        title: Text(
+          "SpotFinder",
+          style: GoogleFonts.poppins(
+            color: Colors.white,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        centerTitle: true,
+        backgroundColor: Colors.transparent,
         elevation: 0,
       ),
       body: Container(
