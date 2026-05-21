@@ -1,0 +1,8 @@
+{
+  "appId": "com.cowork.app",
+  "appName": "CoWork Tunisia",
+  "webDir": "dist",
+  "server": {
+    "androidScheme": "http"
+  }
+}

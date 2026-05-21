@@ -1,0 +1,54 @@
+{
+  "kind": "collectionType",
+  "collectionName": "spaces",
+  "info": {
+    "singularName": "space",
+    "pluralName": "spaces",
+    "displayName": "Space"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "address": {
+      "type": "string"
+    },
+    "lat": {
+      "type": "decimal"
+    },
+    "lng": {
+      "type": "decimal"
+    },
+    "capacity": {
+      "type": "integer"
+    },
+    "pricePerHour": {
+      "type": "decimal"
+    },
+    "amenities": {
+      "type": "json"
+    },
+    "rating": {
+      "type": "decimal"
+    },
+    "managerId": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user"
+    },
+    "imageUrl": {
+      "type": "string"
+    },
+    "images": {
+      "type": "json"
+    },
+    "type": {
+      "type": "string"
+    }
+  }
+}
