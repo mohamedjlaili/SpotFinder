@@ -24,9 +24,9 @@ import appLogo from '../../assets/logo.png';
 // 📧 CONFIGURATION EMAILJS
 // Remplacer ces valeurs par vos propres clés EmailJS :
 // ==========================================
-const EMAILJS_SERVICE_ID = 'service_7peb9y8'; // ex: 'service_gmail'
-const EMAILJS_TEMPLATE_ID = 'template_w4luj7a'; // ex: 'template_verification'
-const EMAILJS_PUBLIC_KEY = 'a5MxeKpgsEAL4zfQZ'; // ex: 'user_A1B2C3D4E5'
+const EMAILJS_SERVICE_ID: string = 'service_7peb9y8'; // ex: 'service_gmail'
+const EMAILJS_TEMPLATE_ID: string = 'template_w4luj7a'; // ex: 'template_verification'
+const EMAILJS_PUBLIC_KEY: string = 'a5MxeKpgsEAL4zfQZ'; // ex: 'user_A1B2C3D4E5'
 
 export function LoginPage() {
   const [email, setEmail] = useState('');
@@ -49,6 +49,7 @@ export function LoginPage() {
   const [forgotSuccess, setForgotSuccess] = useState(false);
   const [sandboxCode, setSandboxCode] = useState<string | null>(null);
   const [showPassword, setShowPassword] = useState(false);
+  const [showLoginPassword, setShowLoginPassword] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -93,6 +94,7 @@ export function LoginPage() {
     setForgotError('');
     setForgotLoading(true);
 
+    let code = '';
     try {
       // 1. Check if the email exists in our database first!
       const exists = await authAPI.checkEmailExists(forgotEmail);
@@ -103,7 +105,7 @@ export function LoginPage() {
       }
 
       // Generate 4-digit verification code
-      const code = Math.floor(1000 + Math.random() * 9000).toString();
+      code = Math.floor(1000 + Math.random() * 9000).toString();
       setGeneratedCode(code);
 
       // Check if EmailJS keys are configured
@@ -261,13 +263,20 @@ export function LoginPage() {
               <div className="relative">
                 <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-4.5 h-4.5 text-slate-600" />
                 <input
-                  type="password"
+                  type={showLoginPassword ? 'text' : 'password'}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
-                  className="w-full pl-11 pr-4 py-3.5 bg-white border-2 border-slate-300 rounded-2xl focus:ring-2 focus:ring-indigo-500 focus:bg-white focus:border-indigo-500 transition-all text-base font-bold text-slate-900 placeholder-slate-400"
+                  className="w-full pl-11 pr-11 py-3.5 bg-white border-2 border-slate-300 rounded-2xl focus:ring-2 focus:ring-indigo-500 focus:bg-white focus:border-indigo-500 transition-all text-base font-bold text-slate-900 placeholder-slate-400"
                   placeholder="••••••••"
                 />
+                <button
+                  type="button"
+                  onClick={() => setShowLoginPassword(!showLoginPassword)}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-700"
+                >
+                  {showLoginPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                </button>
               </div>
               
               {/* Forgot Password? Link */}

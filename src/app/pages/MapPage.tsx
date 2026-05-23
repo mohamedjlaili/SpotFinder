@@ -708,31 +708,38 @@ function ImageSlider({ images, spaceName }: { images: string[], spaceName: strin
   };
 
   return (
-    <div className="relative h-56 w-full rounded-xl overflow-hidden mb-6 group shadow-md bg-gray-100 flex items-center justify-center">
-      <img
-        src={images[currentIndex]}
-        alt={`${spaceName} ${currentIndex + 1}`}
-        className="w-full h-full object-cover transition-all duration-300"
-        onError={(e) => {
-          (e.target as any).onerror = null;
-          (e.target as any).src = 'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=600&q=80';
-        }}
-      />
+    <div className="relative h-56 w-full rounded-xl overflow-hidden mb-6 group shadow-md bg-slate-950 flex items-center justify-center">
+      <AnimatePresence mode="wait">
+        <motion.img
+          key={currentIndex}
+          src={images[currentIndex]}
+          alt={`${spaceName} ${currentIndex + 1}`}
+          initial={{ opacity: 0, scale: 1.03 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.97 }}
+          transition={{ duration: 0.25, ease: "easeInOut" }}
+          className="w-full h-full object-cover"
+          onError={(e) => {
+            (e.target as any).onerror = null;
+            (e.target as any).src = 'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=600&q=80';
+          }}
+        />
+      </AnimatePresence>
       {images.length > 1 && (
         <>
           <button
             onClick={handlePrev}
-            className="absolute left-2 top-1/2 -translate-y-1/2 bg-black bg-opacity-50 hover:bg-opacity-70 text-white p-1.5 rounded-full transition-colors opacity-0 group-hover:opacity-100 flex items-center justify-center w-8 h-8 font-bold"
+            className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/80 text-white p-1.5 rounded-full transition-all opacity-0 group-hover:opacity-100 flex items-center justify-center w-8 h-8 font-bold z-10"
           >
             &#10094;
           </button>
           <button
             onClick={handleNext}
-            className="absolute right-2 top-1/2 -translate-y-1/2 bg-black bg-opacity-50 hover:bg-opacity-70 text-white p-1.5 rounded-full transition-colors opacity-0 group-hover:opacity-100 flex items-center justify-center w-8 h-8 font-bold"
+            className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/80 text-white p-1.5 rounded-full transition-all opacity-0 group-hover:opacity-100 flex items-center justify-center w-8 h-8 font-bold z-10"
           >
             &#10095;
           </button>
-          <div className="absolute bottom-2 left-1/2 -translate-x-1/2 bg-black bg-opacity-60 text-white text-xs px-2 py-0.5 rounded-full font-medium">
+          <div className="absolute bottom-2 left-1/2 -translate-x-1/2 bg-black/70 text-white text-xs px-2 py-0.5 rounded-full font-medium z-10">
             {currentIndex + 1} / {images.length}
           </div>
         </>

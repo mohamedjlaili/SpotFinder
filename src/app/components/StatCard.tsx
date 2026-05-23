@@ -4,7 +4,7 @@ import { LucideIcon } from 'lucide-react';
 interface StatCardProps {
   title: string;
   value: string | number;
-  icon: LucideIcon;
+  icon: LucideIcon | React.ComponentType<any>;
   color: 'blue' | 'green' | 'purple' | 'orange' | 'red' | 'pink';
   delay?: number;
   onClick?: () => void;
