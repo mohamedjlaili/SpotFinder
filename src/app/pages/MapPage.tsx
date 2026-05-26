@@ -299,7 +299,7 @@ export function MapPage() {
   }
 
   return (
-    <div className="h-full flex flex-col bg-slate-950 text-slate-100">
+    <div className="h-[calc(100vh-64px)] lg:h-[calc(100vh-73px)] flex flex-col bg-slate-950 text-slate-100">
       <div className="p-5 bg-slate-900 border-b border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-sm">
         <div>
           <h1 className="text-2xl font-bold text-slate-100">Spaces Map</h1>
