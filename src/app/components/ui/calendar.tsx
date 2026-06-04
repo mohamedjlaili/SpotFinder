@@ -1,3 +1,8 @@
+/**
+ * @file calendar.tsx
+ * @description Calendar UI component. Visual calendar layout to select individual or range dates.
+ */
+
 "use client";
 
 import * as React from "react";

@@ -1,3 +1,8 @@
+/**
+ * @file input-otp.tsx
+ * @description Input OTP UI component. Segmented PIN/OTP secure code inputs.
+ */
+
 "use client";
 
 import * as React from "react";

@@ -1,12 +1,25 @@
-'use strict';
-
 /**
- * reservation controller
+ * @file reservation.js
+ * @description Custom controller for the Reservation API endpoint.
+ * Extends default Strapi controller. Overrides `create`, `update`, `delete`, and `find` actions
+ * to implement slot overlap validation, role-based reservation access security (managers only modify 
+ * reservations on their own spaces), and user data sanitization.
  */
+
+'use strict';
 
 const { createCoreController } = require('@strapi/strapi').factories;
 
 module.exports = createCoreController('api::reservation.reservation', ({ strapi }) => ({
+  /**
+   * Overridden create action.
+   * Validates date formats, checks that the space is not already booked (overlapping slots),
+   * and binds the reservation to the authenticated user's ID.
+   * 
+   * @function create
+   * @param {object} ctx - Koa request context
+   * @returns {Promise<object>}
+   */
   async create(ctx) {
     const { startDate, endDate, spaceId } = ctx.request.body.data || {};
     if (!startDate || !endDate || !spaceId) {

@@ -1,3 +1,8 @@
+/**
+ * @file toggle.tsx
+ * @description Toggle UI component. Binary interactive button state.
+ */
+
 "use client";
 
 import * as React from "react";

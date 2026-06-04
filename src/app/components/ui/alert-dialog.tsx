@@ -1,3 +1,8 @@
+/**
+ * @file alert-dialog.tsx
+ * @description Alert Dialog UI component. Modal dialog that interrupts the user with important content and expects a response.
+ */
+
 "use client";
 
 import * as React from "react";

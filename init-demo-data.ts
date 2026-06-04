@@ -1,11 +1,23 @@
-// Script to initialize demo data for the coworking app
+/**
+ * @file init-demo-data.ts
+ * @description Seed script to set up mock/demo data for the coworking application.
+ * It seeds an admin user, a manager user, and a list of default coworking spaces in Paris.
+ */
 
-// First, create an admin user
+/**
+ * Creates a default Admin user by invoking the backend's auth signup API.
+ * 
+ * @async
+ * @function createAdminUser
+ * @returns {Promise<void>}
+ */
 async function createAdminUser() {
+  // Use the Supabase endpoint from environment or fallback to localhost
   const SUPABASE_URL = process.env.SUPABASE_URL || 'http://localhost:54321';
 
   console.log('Creating admin user...');
 
+  // Call the signup edge function with static credentials for testing
   const response = await fetch(`${SUPABASE_URL}/functions/v1/make-server-33a5ae3b/auth/signup`, {
     method: 'POST',
     headers: {
@@ -19,6 +31,7 @@ async function createAdminUser() {
     }),
   });
 
+  // Handle errors gracefully since the seed script might be run multiple times
   if (!response.ok) {
     const error = await response.json();
     console.log('Admin user might already exist or error:', error);
@@ -28,7 +41,15 @@ async function createAdminUser() {
   }
 }
 
-// Then create a manager user
+/**
+ * Creates a default Manager user by invoking the signup API.
+ * On success, performs a sign-in to retrieve a JWT access token needed
+ * to authenticate space creation requests.
+ * 
+ * @async
+ * @function createManagerUser
+ * @returns {Promise<string|null>} The access token for the created manager, or null if creation failed.
+ */
 async function createManagerUser() {
   const SUPABASE_URL = process.env.SUPABASE_URL || 'http://localhost:54321';
 
@@ -55,7 +76,7 @@ async function createManagerUser() {
     const data = await response.json();
     console.log('✓ Manager user created:', data.user);
 
-    // Login to get the token
+    // Login immediately with the new user's credentials to acquire a session token
     const loginResponse = await fetch(`${SUPABASE_URL}/functions/v1/make-server-33a5ae3b/auth/signin`, {
       method: 'POST',
       headers: {
@@ -72,10 +93,19 @@ async function createManagerUser() {
   }
 }
 
-// Create demo coworking spaces
+/**
+ * Iterates through a hardcoded list of coworking spaces and posts them
+ * to the backend database using the manager's JWT token for authorization.
+ * 
+ * @async
+ * @function createDemoSpaces
+ * @param {string} token - The manager's JWT access token.
+ * @returns {Promise<void>}
+ */
 async function createDemoSpaces(token: string) {
   const SUPABASE_URL = process.env.SUPABASE_URL || 'http://localhost:54321';
 
+  // Hardcoded Parisian coworking locations with geographic coordinates and metadata
   const spaces = [
     {
       name: 'CoWork Paris Centre',
@@ -141,6 +171,7 @@ async function createDemoSpaces(token: string) {
 
   console.log('\nCreating demo coworking spaces...');
 
+  // Create each space sequentially via the spaces endpoint
   for (const space of spaces) {
     const response = await fetch(`${SUPABASE_URL}/functions/v1/make-server-33a5ae3b/spaces`, {
       method: 'POST',
@@ -161,13 +192,24 @@ async function createDemoSpaces(token: string) {
   }
 }
 
-// Main execution
+/**
+ * Main execution routine of the seeding script.
+ * Runs sequentially to build users and spaces.
+ * 
+ * @async
+ * @function main
+ * @returns {Promise<void>}
+ */
 async function main() {
   console.log('🚀 Initializing demo data for CoWork app...\n');
 
+  // Step 1: Create Admin
   await createAdminUser();
+  
+  // Step 2: Create Manager and fetch their token
   const managerToken = await createManagerUser();
 
+  // Step 3: Seed spaces if manager token is retrieved
   if (managerToken) {
     await createDemoSpaces(managerToken);
   } else {
@@ -181,4 +223,6 @@ async function main() {
   console.log('   Password: password123');
 }
 
+// Kick off seeding and print unhandled exceptions
 main().catch(console.error);
+

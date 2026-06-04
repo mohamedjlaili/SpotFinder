@@ -1,3 +1,8 @@
+/**
+ * @file slider.tsx
+ * @description Slider UI component. Range sliding selection input.
+ */
+
 "use client";
 
 import * as React from "react";

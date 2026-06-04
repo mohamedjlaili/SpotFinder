@@ -1,3 +1,8 @@
+/**
+ * @file separator.tsx
+ * @description Separator UI component. Visual horizontal or vertical separator lines.
+ */
+
 "use client";
 
 import * as React from "react";

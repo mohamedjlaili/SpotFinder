@@ -1,3 +1,8 @@
+/**
+ * @file dropdown-menu.tsx
+ * @description Dropdown Menu UI component. List selector overlay toggled via click triggers.
+ */
+
 "use client";
 
 import * as React from "react";

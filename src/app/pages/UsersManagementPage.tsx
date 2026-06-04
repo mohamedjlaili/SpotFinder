@@ -1,3 +1,10 @@
+/**
+ * @file UsersManagementPage.tsx
+ * @description Provides the interface for admins to manage user accounts.
+ * Allows viewing all registered users (except other admins), updating their names, 
+ * emails, passwords, roles (user/manager), and deleting user accounts.
+ */
+
 import { useEffect, useState } from 'react';
 import { usersAPI, authAPI } from '../../utils/api';
 import { useAuth } from '../../contexts/AuthContext';
@@ -24,6 +31,13 @@ const roleColors = {
   admin: 'bg-rose-50 text-rose-700 border-rose-100 shadow-sm shadow-rose-50/50',
 };
 
+/**
+ * UsersManagementPage component.
+ * Renders the user list and edit forms for administrators to manage registered roles.
+ * 
+ * @function UsersManagementPage
+ * @returns {JSX.Element}
+ */
 export function UsersManagementPage() {
   const [users, setUsers] = useState<UserData[]>([]);
   const [isLoading, setIsLoading] = useState(true);

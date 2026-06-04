@@ -1,3 +1,8 @@
+/**
+ * @file breadcrumb.tsx
+ * @description Breadcrumb UI component. Secondary navigation path helper showing current hierarchical position.
+ */
+
 import * as React from "react";
 import { Slot } from "@radix-ui/react-slot";
 import { ChevronRight, MoreHorizontal } from "lucide-react";

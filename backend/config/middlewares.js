@@ -1,3 +1,10 @@
+/**
+ * @file middlewares.js
+ * @description Strapi middlewares configuration array.
+ * Configures logger, security, public static folder, session, favicon, body parsers,
+ * and custom CORS origins and methods to facilitate cross-origin mobile app connections.
+ */
+
 module.exports = [
   'strapi::logger',
   'strapi::errors',

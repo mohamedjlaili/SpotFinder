@@ -1,3 +1,8 @@
+/**
+ * @file pagination.tsx
+ * @description Pagination UI component. Structured navigation buttons for paginated content views.
+ */
+
 import * as React from "react";
 import {
   ChevronLeftIcon,

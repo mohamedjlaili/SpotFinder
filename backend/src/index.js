@@ -1,8 +1,23 @@
+/**
+ * @file index.js
+ * @description Root entry file for backend Strapi applications.
+ * Handles server registration, database seeding, standard role permissions grants, 
+ * and pre-populating mock spaces/users on application bootstrap.
+ */
+
 'use strict';
 
 module.exports = {
   register() {},
 
+  /**
+   * Strapi bootstrap lifecycle hook.
+   * Executed when the server starts. Handles programmatic permission assignment and seeds dummy coworking spaces/users.
+   * 
+   * @function bootstrap
+   * @param {object} params
+   * @param {object} params.strapi - The Strapi instance
+   */
   async bootstrap({ strapi }) {
     console.log('🔄 Starting database seeding...');
 

@@ -4,5 +4,8 @@
   "webDir": "dist",
   "server": {
     "androidScheme": "http"
+  },
+  "android": {
+    "overrideUserAgent": "CoWorkTunisia/1.0 (contact@cowork.com)"
   }
 }

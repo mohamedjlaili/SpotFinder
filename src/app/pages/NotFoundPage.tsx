@@ -1,7 +1,19 @@
+/**
+ * @file NotFoundPage.tsx
+ * @description Standard 404 error page. Displays a user-friendly error message
+ * when routing to an undefined path and provides navigation back to the dashboard overview.
+ */
+
 import { Link } from 'react-router';
 import { Home, HelpCircle } from 'lucide-react';
 import { motion } from 'motion/react';
 
+/**
+ * 404 Not Found Page Component.
+ * 
+ * @function NotFoundPage
+ * @returns {JSX.Element}
+ */
 export function NotFoundPage() {
   return (
     <div className="min-h-screen flex items-center justify-center p-6 relative overflow-hidden bg-slate-950 select-none">
@@ -36,6 +48,7 @@ export function NotFoundPage() {
           </p>
 
           <motion.div whileHover={{ y: -2 }} whileTap={{ scale: 0.98 }}>
+            {/* Link routing back to the main dashboard */}
             <Link
               to="/dashboard"
               className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:brightness-110 text-white py-4 rounded-2xl font-bold shadow-lg shadow-indigo-500/20 transition-all flex items-center justify-center gap-2 text-sm"
@@ -49,3 +62,4 @@ export function NotFoundPage() {
     </div>
   );
 }
+

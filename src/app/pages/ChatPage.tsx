@@ -1,3 +1,10 @@
+/**
+ * @file ChatPage.tsx
+ * @description In-app chat interface between clients and managers.
+ * Shows a listing of available chat threads (filtered dynamically based on active reservation bookings),
+ * retrieves and normalizes messages in real-time using long-polling, handles message sending, and updates read status.
+ */
+
 import { useState, useEffect, useRef } from 'react';
 import { useLocation, Navigate } from 'react-router';
 import { useAuth } from '../../contexts/AuthContext';

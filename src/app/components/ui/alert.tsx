@@ -1,3 +1,8 @@
+/**
+ * @file alert.tsx
+ * @description Alert UI component. Displays callouts for user attention (e.g., status message, error, or warning notices).
+ */
+
 import * as React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 

@@ -1,6 +1,19 @@
+/**
+ * @file SplashScreen.tsx
+ * @description Renders a beautifully animated initial splash screen.
+ * Displays the SpotFinder branding logo, animated typography, and a progress loader.
+ */
+
 import { motion } from 'motion/react';
 import appLogo from '../../assets/logo.png';
 
+/**
+ * SplashScreen component.
+ * Displays the animated application loading splash interface.
+ * 
+ * @function SplashScreen
+ * @returns {JSX.Element}
+ */
 export default function SplashScreen() {
   return (
     <motion.div

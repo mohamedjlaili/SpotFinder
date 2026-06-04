@@ -1,3 +1,8 @@
+/**
+ * @file skeleton.tsx
+ * @description Skeleton UI component. Styled loading placeholders.
+ */
+
 import { cn } from "./utils";
 
 function Skeleton({ className, ...props }: React.ComponentProps<"div">) {

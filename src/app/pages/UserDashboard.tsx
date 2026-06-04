@@ -1,3 +1,10 @@
+/**
+ * @file UserDashboard.tsx
+ * @description Multi-role dashboard page (User, Manager, Admin).
+ * Depending on the active user's credentials, it renders role-specific stat cards,
+ * graphical charts (using Recharts), custom action shortcuts, and a transaction history modal.
+ */
+
 import { useEffect, useState } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { analyticsAPI, reservationsAPI, spacesAPI } from '../../utils/api';
@@ -37,6 +44,13 @@ import {
   Legend
 } from 'recharts';
 
+/**
+ * UserDashboard view controller. Renders appropriate cards/graphs
+ * based on role context.
+ * 
+ * @function UserDashboard
+ * @returns {JSX.Element}
+ */
 export function UserDashboard() {
   const { user, token } = useAuth();
   const [stats, setStats] = useState<any>(null);
@@ -172,9 +186,9 @@ export function UserDashboard() {
   // 1. Revenue & Spent: respects resetDate filter to match the "My Revenue" and "Total Spent" cards
   const monthlyRevenueSpentData = buildMonthlyData(filteredReservations);
 
-  // 2. Bookings: uses same filter as the booking cards (status !== 'completed' && status !== 'terminée')
+  // 2. Bookings: includes all confirmed and completed sessions (excludes cancelled ones)
   const monthlyBookingsData = buildMonthlyData(reservations.filter(
-    (r) => r.status !== 'completed' && r.status !== 'terminée'
+    (r) => r.status !== 'cancelled' && r.status !== 'annulée' && r.status !== 'refused' && r.status !== 'refuse'
   ));
 
   const renderHistoryModal = () => {

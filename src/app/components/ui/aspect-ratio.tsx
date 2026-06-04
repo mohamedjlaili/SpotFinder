@@ -1,3 +1,8 @@
+/**
+ * @file aspect-ratio.tsx
+ * @description Aspect Ratio UI component. Utility wrapper to constrain visual elements/images to specific proportional dimensions.
+ */
+
 "use client";
 
 import * as AspectRatioPrimitive from "@radix-ui/react-aspect-ratio";

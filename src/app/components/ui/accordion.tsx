@@ -1,3 +1,8 @@
+/**
+ * @file accordion.tsx
+ * @description Accordion UI component. Vertically stacked set of interactive headings that each disclose an associated section of content.
+ */
+
 "use client";
 
 import * as React from "react";

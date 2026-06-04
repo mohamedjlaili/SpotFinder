@@ -1,3 +1,8 @@
+/**
+ * @file table.tsx
+ * @description Table UI component. Formatted data tabular grid elements.
+ */
+
 "use client";
 
 import * as React from "react";

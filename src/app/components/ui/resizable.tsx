@@ -1,3 +1,8 @@
+/**
+ * @file resizable.tsx
+ * @description Resizable UI component. Interactive layout panels that can be resized by dragging split handles.
+ */
+
 "use client";
 
 import * as React from "react";

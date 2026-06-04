@@ -1,3 +1,8 @@
+/**
+ * @file switch.tsx
+ * @description Switch UI component. Interactive toggle inputs.
+ */
+
 "use client";
 
 import * as React from "react";

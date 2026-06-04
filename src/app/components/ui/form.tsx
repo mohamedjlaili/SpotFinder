@@ -1,3 +1,8 @@
+/**
+ * @file form.tsx
+ * @description Form UI component. Accessible forms control framework integrated with hook-form and Zod validation schemas.
+ */
+
 "use client";
 
 import * as React from "react";

@@ -1,3 +1,8 @@
+/**
+ * @file input.tsx
+ * @description Input UI component. Styled form input field.
+ */
+
 import * as React from "react";
 
 import { cn } from "./utils";

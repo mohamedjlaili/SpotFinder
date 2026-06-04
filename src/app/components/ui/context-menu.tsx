@@ -1,3 +1,8 @@
+/**
+ * @file context-menu.tsx
+ * @description Context Menu UI component. Popover list triggered by right-click interactions.
+ */
+
 "use client";
 
 import * as React from "react";

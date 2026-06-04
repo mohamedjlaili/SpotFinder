@@ -1,12 +1,10 @@
-'use strict';
-
 /**
- * Admin Dashboard Controller
- * Path: src/admin/controllers/admin-dashboard.js
- *
- * All routes are protected by Strapi's admin user token (see routes file).
- * Uses strapi.db.query() which is compatible with both Strapi v4 and v5.
+ * @file admin-dashboard.js
+ * @description Controller for the custom admin dashboard api endpoints.
+ * Aggregates statistics, registers managers, lists/deletes spaces, and lists/deletes reservations.
  */
+
+'use strict';
 
 module.exports = {
 

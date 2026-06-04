@@ -1,3 +1,8 @@
+/**
+ * @file label.tsx
+ * @description Label UI component. Accessible text labels bound to form input elements.
+ */
+
 "use client";
 
 import * as React from "react";

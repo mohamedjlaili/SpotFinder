@@ -1,3 +1,9 @@
+/**
+ * @file 01-custom-routes.js
+ * @description Custom unauthenticated authentication endpoints mapped to the space controller.
+ * Exposes endpoints for email verification check and password resets.
+ */
+
 'use strict';
 
 module.exports = {

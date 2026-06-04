@@ -1,16 +1,11 @@
-'use strict';
-
 /**
- * Admin Dashboard Routes
- * Path: src/admin/routes/admin-dashboard.js
- *
- * All routes require a valid JWT. Access is restricted to users
- * with user_role = 'admin' via the 'admin-only' policy below.
- *
- * Registration: this file is picked up automatically by Strapi
- * as long as it is placed in src/admin/routes/ and the controller
- * is in src/admin/controllers/.
+ * @file admin-dashboard.js
+ * @description Custom admin dashboard routes definition.
+ * Registers endpoints for dashboard statistics, manager accounts CRUD operations, 
+ * spaces, and reservation details.
  */
+
+'use strict';
 
 module.exports = {
   routes: [

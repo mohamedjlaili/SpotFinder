@@ -1,3 +1,8 @@
+/**
+ * @file command.tsx
+ * @description Command UI component. Fast, search-driven command menu overlay.
+ */
+
 "use client";
 
 import * as React from "react";

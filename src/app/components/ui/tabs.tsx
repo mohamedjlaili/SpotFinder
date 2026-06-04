@@ -1,3 +1,8 @@
+/**
+ * @file tabs.tsx
+ * @description Tabs UI component. Navigation control panels switching active panel display.
+ */
+
 "use client";
 
 import * as React from "react";

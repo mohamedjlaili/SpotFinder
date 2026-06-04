@@ -1,3 +1,10 @@
+/**
+ * @file ReservationsPage.tsx
+ * @description Page view listing and managing coworking space bookings.
+ * Supports coworker booking modifications/cancellations, manager booking confirmations/completions,
+ * dismissal from local lists, and post-session client ratings/reviews which recalculate space averages.
+ */
+
 import { useEffect, useState } from 'react';
 import { reservationsAPI, spacesAPI, messagesAPI } from '../../utils/api';
 import { useAuth } from '../../contexts/AuthContext';
@@ -21,6 +28,12 @@ interface Reservation {
   comment?: string;
 }
 
+/**
+ * ReservationsPage component managing list states, filters, and modal prompts.
+ * 
+ * @function ReservationsPage
+ * @returns {JSX.Element}
+ */
 export function ReservationsPage() {
   const [reservations, setReservations] = useState<Reservation[]>([]);
   const [isLoading, setIsLoading] = useState(true);

@@ -1,3 +1,8 @@
+/**
+ * @file progress.tsx
+ * @description Progress UI component. Visual bar displaying loading progress status.
+ */
+
 "use client";
 
 import * as React from "react";

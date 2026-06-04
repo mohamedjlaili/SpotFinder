@@ -1,3 +1,8 @@
+/**
+ * @file menubar.tsx
+ * @description Menubar UI component. Desktop-style horizontal menu bar.
+ */
+
 "use client";
 
 import * as React from "react";

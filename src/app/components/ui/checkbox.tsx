@@ -1,3 +1,8 @@
+/**
+ * @file checkbox.tsx
+ * @description Checkbox UI component. Form selection control permitting binary checked states.
+ */
+
 "use client";
 
 import * as React from "react";

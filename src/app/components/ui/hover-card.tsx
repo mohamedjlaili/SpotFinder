@@ -1,3 +1,8 @@
+/**
+ * @file hover-card.tsx
+ * @description Hover Card UI component. Popover content disclosed when hovering cursor over trigger elements.
+ */
+
 "use client";
 
 import * as React from "react";

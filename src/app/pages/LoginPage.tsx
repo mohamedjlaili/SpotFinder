@@ -1,3 +1,9 @@
+/**
+ * @file LoginPage.tsx
+ * @description Authentication page providing user login capabilities, password recovery wizard (3-step verification flow via EmailJS with sandbox fallback),
+ * and layout wrappers.
+ */
+
 import { useState, useRef, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router';
 import { useAuth } from '../../contexts/AuthContext';
@@ -22,12 +28,19 @@ import appLogo from '../../assets/logo.png';
 
 // ==========================================
 // 📧 CONFIGURATION EMAILJS
-// Remplacer ces valeurs par vos propres clés EmailJS :
+// EmailJS credentials for sending password reset verification codes.
+// Falls back to Sandbox Mode if service keys are unconfigured.
 // ==========================================
 const EMAILJS_SERVICE_ID: string = 'service_7peb9y8'; // ex: 'service_gmail'
 const EMAILJS_TEMPLATE_ID: string = 'template_w4luj7a'; // ex: 'template_verification'
 const EMAILJS_PUBLIC_KEY: string = 'a5MxeKpgsEAL4zfQZ'; // ex: 'user_A1B2C3D4E5'
 
+/**
+ * LoginPage page view component.
+ * 
+ * @function LoginPage
+ * @returns {JSX.Element}
+ */
 export function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');

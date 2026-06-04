@@ -1,3 +1,8 @@
+/**
+ * @file select.tsx
+ * @description Select UI component. Trigger and options list overlays.
+ */
+
 "use client";
 
 import * as React from "react";

@@ -1,3 +1,8 @@
+/**
+ * @file use-mobile.ts
+ * @description use-mobile custom hook. Detects responsive viewport widths matching mobile breakpoints.
+ */
+
 import * as React from "react";
 
 const MOBILE_BREAKPOINT = 768;

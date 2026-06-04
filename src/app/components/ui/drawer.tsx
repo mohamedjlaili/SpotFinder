@@ -1,3 +1,8 @@
+/**
+ * @file drawer.tsx
+ * @description Drawer UI component. Side-sliding sheet or bottom drawer overlay.
+ */
+
 "use client";
 
 import * as React from "react";

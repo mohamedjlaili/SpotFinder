@@ -1,3 +1,8 @@
+/**
+ * @file popover.tsx
+ * @description Popover UI component. Contextual popover panels.
+ */
+
 "use client";
 
 import * as React from "react";

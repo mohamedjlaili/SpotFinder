@@ -1,3 +1,8 @@
+/**
+ * @file dialog.tsx
+ * @description Dialog UI component. Centered overlay modal layout wrapper.
+ */
+
 "use client";
 
 import * as React from "react";

@@ -1,3 +1,10 @@
+/**
+ * @file DashboardLayout.tsx
+ * @description Master dashboard layout for authenticated users.
+ * Handles sidebar navigation based on user roles (Admin, Manager, User), profile editing operations,
+ * screen transitions, responsiveness, session logs, and mounts global services like AIChatBot and NotificationBell.
+ */
+
 import { Outlet, Navigate, useNavigate, useLocation } from "react-router";
 import { useAuth } from "../../contexts/AuthContext";
 import {
@@ -26,11 +33,22 @@ import { AIChatBot } from "../components/AIChatBot";
 import { usersAPI } from "../../utils/api";
 import appLogo from "../../assets/logo.png";
 
+/**
+ * Main dashboard layout structure containing side navigation, top status bar,
+ * central page outlet, and user profile configuration panel.
+ * 
+ * @function DashboardLayout
+ * @returns {JSX.Element}
+ */
 export function DashboardLayout() {
   const { user, isLoading, logout, token, updateUser } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
+
+  // Sidebar toggle state for mobile viewports
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  // Profile modal settings and states
   const [showProfileModal, setShowProfileModal] = useState(false);
   const [profileName, setProfileName] = useState('');
   const [profileEmail, setProfileEmail] = useState('');
@@ -41,8 +59,11 @@ export function DashboardLayout() {
   const [profilePassword, setProfilePassword] = useState('');
   const [profilePasswordConfirm, setProfilePasswordConfirm] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  
+  // File input reference to trigger avatar upload selection programmatically
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  // Show a loading screen while resolving user authentication state on mount
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-slate-50 text-slate-900">
@@ -54,17 +75,28 @@ export function DashboardLayout() {
     );
   }
 
+  // Redirect to login if user session is not found
   if (!user) {
     return <Navigate to="/auth/login" replace />;
   }
 
+  /**
+   * Triggers the sign-out routine and routes back to login.
+   * 
+   * @function handleLogout
+   */
   const handleLogout = () => {
     logout();
     navigate('/auth/login');
   };
 
+  /**
+   * Initializes profile states with current user details and launches the modal.
+   * 
+   * @function openProfileModal
+   */
   const openProfileModal = () => {
-    if (user.role === 'admin') return;
+    if (user.role === 'admin') return; // Admins cannot edit profiles directly via this modal
     setProfileName(user.name);
     setProfileEmail(user.email);
     setProfileImage(user.profileImage || null);
@@ -76,6 +108,13 @@ export function DashboardLayout() {
     setShowProfileModal(true);
   };
 
+  /**
+   * Reads the uploaded image file as a DataURL base64 string to update avatar state locally.
+   * Checks file size limit of 2MB beforehand.
+   * 
+   * @function handleImageUpload
+   * @param {React.ChangeEvent<HTMLInputElement>} e - File input change event.
+   */
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -91,6 +130,13 @@ export function DashboardLayout() {
     reader.readAsDataURL(file);
   };
 
+  /**
+   * Validates values and syncs profile changes (Name, Email, password, and avatar base64)
+   * to both the backend DB and the active AuthContext.
+   * 
+   * @async
+   * @function handleSaveProfile
+   */
   const handleSaveProfile = async () => {
     if (!token || !user) return;
     if (!profileName.trim()) {
@@ -109,9 +155,11 @@ export function DashboardLayout() {
       setProfileError("Passwords do not match.");
       return;
     }
+    
     setIsSavingProfile(true);
     setProfileError(null);
     try {
+      // 1. Sync modifications to backend server database
       await usersAPI.updateUser(
         token,
         user.id,
@@ -121,11 +169,14 @@ export function DashboardLayout() {
         profilePassword || undefined,
         profileImage || undefined
       );
+      
+      // 2. Update memory state in global React AuthContext
       updateUser({
         name: profileName.trim(),
         email: profileEmail.trim(),
         profileImage: profileImage || undefined,
       });
+      
       setProfileSuccess(true);
       setTimeout(() => {
         setShowProfileModal(false);
@@ -138,7 +189,11 @@ export function DashboardLayout() {
     }
   };
 
-  // Avatar component – renders profile image or initials
+  /**
+   * Sub-component to render user avatar image. Fallback to name initials if image is missing.
+   * 
+   * @function Avatar
+   */
   const Avatar = ({ size = 'md', clickable = false }: { size?: 'sm' | 'md' | 'lg'; clickable?: boolean }) => {
     const sizeClasses = {
       sm: 'w-8 h-8 text-xs',
@@ -171,6 +226,7 @@ export function DashboardLayout() {
     );
   };
 
+  // List of all navigation routes and authorization permissions
   const navItems = [
     { path: '/dashboard/overview', label: 'Dashboard', icon: LayoutDashboard, roles: ['user', 'manager', 'admin'] },
     { path: '/dashboard/map', label: 'Interactive Map', icon: Map, roles: ['user'] },
@@ -180,9 +236,11 @@ export function DashboardLayout() {
     { path: '/dashboard/chat', label: 'Messaging', icon: MessageSquare, roles: ['user', 'manager'] },
   ];
 
+  // Filter routes based on user role authorization
   const filteredNavItems = navItems.filter(item => item.roles.includes(user.role));
   const canEditProfile = user.role === 'user' || user.role === 'manager';
 
+  // Sidebar Layout rendering
   const NavContent = () => (
     <>
       {/* Brand logo & Profile summary */}
@@ -195,7 +253,7 @@ export function DashboardLayout() {
           </div>
         </div>
 
-        {/* User Card */}
+        {/* User profile block */}
         <div className="flex items-center gap-3 bg-white p-3 rounded-2xl border border-slate-100 shadow-sm relative overflow-hidden group">
           <div className="absolute right-0 bottom-0 w-16 h-16 bg-indigo-500/10 rounded-full blur-xl opacity-40 group-hover:opacity-75 transition-opacity duration-300" />
           <div className="relative z-10">
@@ -235,6 +293,7 @@ export function DashboardLayout() {
                   : 'text-slate-500 hover:bg-slate-50 hover:text-slate-800 font-semibold'
               }`}
             >
+              {/* Highlight layout selection with Framer Motion transitions */}
               {isActive && (
                 <motion.div
                   layoutId="activeNavIndicator"
@@ -249,7 +308,7 @@ export function DashboardLayout() {
         })}
       </nav>
 
-      {/* Logout button */}
+      {/* Logout triggers */}
       <div className="p-4 border-t border-slate-100 bg-slate-50/20">
         <button
           onClick={handleLogout}
@@ -264,7 +323,7 @@ export function DashboardLayout() {
 
   return (
     <div className="min-h-screen flex bg-slate-50 text-slate-900">
-      {/* Mobile sidebar overlay */}
+      {/* Mobile sidebar overlay backdrop */}
       <AnimatePresence>
         {isSidebarOpen && (
           <motion.div
@@ -277,7 +336,7 @@ export function DashboardLayout() {
         )}
       </AnimatePresence>
 
-      {/* Sidebar aside wrapper */}
+      {/* Sidebar aside panel */}
       <aside
         className={`fixed lg:static inset-y-0 left-0 z-50 w-66 bg-white border-r border-slate-100 flex flex-col transition-transform duration-300 ${
           isSidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
@@ -294,9 +353,9 @@ export function DashboardLayout() {
         <NavContent />
       </aside>
 
-      {/* Main viewport */}
+      {/* Main viewport area */}
       <main className="flex-1 flex flex-col min-w-0 relative">
-        {/* Mobile top navigation header */}
+        {/* Mobile top navigation header bar */}
         <div className="lg:hidden bg-white border-b border-slate-100 p-4 flex items-center justify-between shadow-sm relative z-30">
           <div className="flex items-center gap-3">
             <button
@@ -316,7 +375,7 @@ export function DashboardLayout() {
           </div>
         </div>
 
-        {/* Desktop Top Bar */}
+        {/* Desktop header Top Bar */}
         <div className="hidden lg:flex bg-white border-b border-slate-100 px-8 py-4 items-center justify-between shadow-sm relative z-30">
           <div>
             <h2 className="text-sm font-black text-slate-800 tracking-wider uppercase">
@@ -332,7 +391,7 @@ export function DashboardLayout() {
           </div>
         </div>
 
-        {/* Dynamic Page viewport scroll area */}
+        {/* Dynamic nested route viewport scroll area */}
         <div className="flex-1 overflow-auto relative z-10">
           <AnimatePresence mode="wait">
             <motion.div
@@ -343,6 +402,7 @@ export function DashboardLayout() {
               transition={{ duration: 0.22, ease: [0.25, 0.1, 0.25, 1.0] }}
               className="min-h-full"
             >
+              {/* React Router outlet for views */}
               <Outlet />
             </motion.div>
           </AnimatePresence>
@@ -360,7 +420,7 @@ export function DashboardLayout() {
               transition={{ type: 'spring', stiffness: 300, damping: 25 }}
               className="bg-white rounded-3xl shadow-2xl w-full max-w-md overflow-hidden border border-slate-200"
             >
-              {/* Modal Header */}
+              {/* Modal Header banner */}
               <div className="relative bg-gradient-to-r from-indigo-600 via-indigo-700 to-purple-700 px-6 pt-6 pb-16">
                 <button
                   onClick={() => setShowProfileModal(false)}
@@ -372,7 +432,7 @@ export function DashboardLayout() {
                 <p className="text-indigo-200 text-xs font-semibold mt-1">Customize your account</p>
               </div>
 
-              {/* Avatar upload section – overlapping header */}
+              {/* Avatar upload section – overlapping the header banner */}
               <div className="flex justify-center -mt-12 relative z-10">
                 <div className="relative group">
                   <div className="w-24 h-24 rounded-2xl overflow-hidden border-4 border-white shadow-xl bg-gradient-to-br from-indigo-500 to-purple-600">
@@ -400,7 +460,7 @@ export function DashboardLayout() {
                 </div>
               </div>
 
-              {/* Form */}
+              {/* Profile details form fields */}
               <div className="px-6 pt-5 pb-6 space-y-4">
                 {profileError && (
                   <div className="bg-rose-50 text-rose-700 text-xs font-bold px-4 py-2.5 rounded-xl border border-rose-200">
@@ -442,8 +502,9 @@ export function DashboardLayout() {
                   </div>
                 </div>
 
+                {/* Password reset section */}
                 <div className="border-t border-slate-100 pt-4 mt-2">
-                  <p className="text-[10px] font-extrabold uppercase tracking-wider text-slate-400 mb-3"> <span className="text-slate-300 normal-case"></span></p>
+                  <p className="text-[10px] font-extrabold uppercase tracking-wider text-slate-400 mb-3"></p>
                   <div className="space-y-3">
                     <div>
                       <label className="text-[10px] font-extrabold uppercase tracking-wider text-slate-500 mb-1.5 block">New password</label>
@@ -481,6 +542,7 @@ export function DashboardLayout() {
                   </div>
                 </div>
 
+                {/* Save and Cancel actions */}
                 <div className="pt-2 flex gap-3">
                   <button
                     onClick={() => setShowProfileModal(false)}
@@ -514,3 +576,4 @@ export function DashboardLayout() {
     </div>
   );
 }
+

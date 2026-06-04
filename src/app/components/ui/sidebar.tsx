@@ -1,3 +1,8 @@
+/**
+ * @file sidebar.tsx
+ * @description Sidebar UI component. Collapsible side navigation layout framework.
+ */
+
 "use client";
 
 import * as React from "react";

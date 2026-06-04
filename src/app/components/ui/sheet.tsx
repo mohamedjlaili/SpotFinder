@@ -1,3 +1,8 @@
+/**
+ * @file sheet.tsx
+ * @description Sheet UI component. Sliding modal panel overlays (e.g., mobile side drawers).
+ */
+
 "use client";
 
 import * as React from "react";

@@ -1,3 +1,8 @@
+/**
+ * @file carousel.tsx
+ * @description Carousel UI component. Slide-scrolling viewport component supporting navigation controls.
+ */
+
 "use client";
 
 import * as React from "react";

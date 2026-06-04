@@ -1,3 +1,8 @@
+/**
+ * @file toggle-group.tsx
+ * @description Toggle Group UI component. Related group of interactive binary toggle buttons.
+ */
+
 "use client";
 
 import * as React from "react";

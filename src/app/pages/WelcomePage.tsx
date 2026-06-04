@@ -1,3 +1,10 @@
+/**
+ * @file WelcomePage.tsx
+ * @description The onboarding/welcome carousel page. Offers new users
+ * a slider overview detailing features (space searches, maps navigation, booking workflow)
+ * and persists completion state to local storage.
+ */
+
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { motion, AnimatePresence } from 'motion/react';
@@ -9,10 +16,17 @@ interface Slide {
   illustration: React.ReactNode;
 }
 
+/**
+ * Onboarding carousel display page.
+ * 
+ * @function WelcomePage
+ * @returns {JSX.Element}
+ */
 export function WelcomePage() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const navigate = useNavigate();
 
+  // Array of slides containing custom SVG vector graphics representing the features
   const slides: Slide[] = [
     {
       title: "Find Your Ideal Space",
@@ -44,11 +58,11 @@ export function WelcomePage() {
           <rect x="40" y="70" width="120" height="70" rx="8" stroke="#00C4CC" strokeWidth="3" fill="#E6FFFA" />
           <line x1="30" y1="140" x2="170" y2="140" stroke="#718096" strokeWidth="4" strokeLinecap="round" />
           <path d="M80 140L90 152H110L120 140" stroke="#718096" strokeWidth="3" strokeLinecap="round" />
- 
+  
           <line x1="60" y1="105" x2="140" y2="105" stroke="#A3E2D7" strokeWidth="2" />
           <line x1="90" y1="70" x2="90" y2="140" stroke="#A3E2D7" strokeWidth="2" />
           <line x1="120" y1="70" x2="120" y2="140" stroke="#A3E2D7" strokeWidth="2" />
- 
+  
           {/* Large glowing pointer */}
           <g transform="translate(100, 75)">
             <path d="M0 -30 C-12 -30 -20 -22 -20 -10 C-20 5 0 25 0 25 C0 25 20 5 20 -10 C20 -22 12 -30 0 -30 Z" fill="#FF9F43" stroke="#FFF" strokeWidth="2" />
@@ -70,7 +84,7 @@ export function WelcomePage() {
           <rect x="110" y="65" width="20" height="20" rx="3" stroke="#00C4CC" strokeWidth="2.5" />
           <rect x="70" y="100" width="20" height="20" rx="3" stroke="#00C4CC" strokeWidth="2.5" />
           <rect x="110" y="100" width="20" height="20" rx="3" stroke="#FF9F43" strokeWidth="2.5" fill="#FFEFE6" />
- 
+  
           {/* Measuring tools */}
           <rect x="45" y="135" width="110" height="15" rx="2" stroke="#FF9F43" strokeWidth="2" fill="#FFEFE6" />
           <line x1="60" y1="135" x2="60" y2="142" stroke="#FF9F43" strokeWidth="1.5" />
@@ -79,7 +93,7 @@ export function WelcomePage() {
           <line x1="105" y1="135" x2="105" y2="145" stroke="#FF9F43" strokeWidth="1.5" />
           <line x1="120" y1="135" x2="120" y2="142" stroke="#FF9F43" strokeWidth="1.5" />
           <line x1="135" y1="135" x2="135" y2="145" stroke="#FF9F43" strokeWidth="1.5" />
- 
+  
           {/* Pencil */}
           <path d="M40 50L45 120L35 120Z" fill="#FF9F43" stroke="#718096" strokeWidth="2" />
           <rect x="35" y="55" width="10" height="55" fill="#FFEFE6" stroke="#718096" strokeWidth="2" />
@@ -88,11 +102,21 @@ export function WelcomePage() {
     }
   ];
  
+  /**
+   * Finalizes onboarding by setting local key cowork_onboarding_completed and routing to the dashboard.
+   * 
+   * @function handleSkipOrFinish
+   */
   const handleSkipOrFinish = () => {
     localStorage.setItem('cowork_onboarding_completed', 'true');
     navigate('/dashboard');
   };
  
+  /**
+   * Advances slider index or ends the flow on the last slide.
+   * 
+   * @function handleNext
+   */
   const handleNext = () => {
     if (currentSlide < slides.length - 1) {
       setCurrentSlide(prev => prev + 1);
@@ -198,3 +222,4 @@ export function WelcomePage() {
     </div>
   );
 }
+

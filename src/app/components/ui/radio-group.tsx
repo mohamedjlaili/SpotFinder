@@ -1,3 +1,8 @@
+/**
+ * @file radio-group.tsx
+ * @description Radio Group UI component. Form controls allowing single choice selections.
+ */
+
 "use client";
 
 import * as React from "react";

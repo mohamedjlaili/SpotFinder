@@ -1,3 +1,8 @@
+/**
+ * @file avatar.tsx
+ * @description Avatar UI component. Renders profile images, fallbacks, or name initials for member identification.
+ */
+
 "use client";
 
 import * as React from "react";

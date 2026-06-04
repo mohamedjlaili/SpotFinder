@@ -1,6 +1,13 @@
+/**
+ * @file MapPage.tsx
+ * @description Interactive Leaflet map page. Displays available coworking spaces
+ * on a geographic map, queries user current location, filters spaces by type (Silent/Collaborative),
+ * shows details/reviews on selected spaces, and manages booking overlap validation and confirmation.
+ */
+
 import { useEffect, useState } from 'react';
 import { spacesAPI, reservationsAPI, messagesAPI } from '../../utils/api';
-import { MapPin, Star, Coins, Clock, X, Calendar, Navigation, Locate, AlertCircle, MessageSquare } from 'lucide-react';
+import { MapPin, Star, Coins, Clock, X, Calendar, Navigation, Locate, AlertCircle, MessageSquare, ArrowLeft } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { useAuth } from '../../contexts/AuthContext';
 import { useNavigate } from 'react-router';
@@ -300,64 +307,66 @@ export function MapPage() {
 
   return (
     <div className="h-[calc(100vh-64px)] lg:h-[calc(100vh-73px)] flex flex-col bg-slate-950 text-slate-100">
-      <div className="p-5 bg-slate-900 border-b border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-sm">
-        <div>
-          <h1 className="text-2xl font-bold text-slate-100">Spaces Map</h1>
-          <p className="text-slate-400 mt-1 text-sm">Visualize spaces and find routes in real-time</p>
-        </div>
+      {!selectedSpace && (
+        <div className="p-5 bg-slate-900 border-b border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-sm">
+          <div>
+            <h1 className="text-2xl font-bold text-slate-100">Spaces Map</h1>
+            <p className="text-slate-400 mt-1 text-sm">Visualize spaces and find routes in real-time</p>
+          </div>
 
-        {/* Modern Glassmorphic Pill Filters for Space Type */}
-        <div className="flex items-center gap-1 bg-slate-950 p-1.5 rounded-2xl border border-slate-800 self-start sm:self-auto shadow-inner">
-          <button
-            onClick={() => setSelectedTypeFilter('all')}
-            className={`px-4 py-2 rounded-xl text-xs font-black tracking-wide transition-all duration-300 ${
-              selectedTypeFilter === 'all'
-                ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-[0_4px_12px_rgba(79,70,229,0.3)]'
-                : 'text-slate-400 hover:text-slate-200'
-            }`}
-          >
-            All spaces
-          </button>
-          <button
-            onClick={() => setSelectedTypeFilter('silencieux')}
-            className={`px-4 py-2 rounded-xl text-xs font-black tracking-wide transition-all duration-300 flex items-center gap-1.5 ${
-              selectedTypeFilter === 'silencieux'
-                ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-[0_4px_12px_rgba(168,85,247,0.3)]'
-                : 'text-slate-400 hover:text-slate-200'
-            }`}
-          >
-            🤫 Silent
-          </button>
-          <button
-            onClick={() => setSelectedTypeFilter('collaboratif')}
-            className={`px-4 py-2 rounded-xl text-xs font-black tracking-wide transition-all duration-300 flex items-center gap-1.5 ${
-              selectedTypeFilter === 'collaboratif'
-                ? 'bg-gradient-to-r from-teal-600 to-emerald-600 text-white shadow-[0_4px_12px_rgba(13,148,136,0.3)]'
-                : 'text-slate-400 hover:text-slate-200'
-            }`}
-          >
-            🤝 Collaborative
-          </button>
-        </div>
+          {/* Modern Glassmorphic Pill Filters for Space Type */}
+          <div className="flex items-center gap-1 bg-slate-950 p-1.5 rounded-2xl border border-slate-800 self-start sm:self-auto shadow-inner">
+            <button
+              onClick={() => setSelectedTypeFilter('all')}
+              className={`px-4 py-2 rounded-xl text-xs font-black tracking-wide transition-all duration-300 ${
+                selectedTypeFilter === 'all'
+                  ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-[0_4px_12px_rgba(79,70,229,0.3)]'
+                  : 'text-slate-400 hover:text-slate-200'
+              }`}
+            >
+              All spaces
+            </button>
+            <button
+              onClick={() => setSelectedTypeFilter('silencieux')}
+              className={`px-4 py-2 rounded-xl text-xs font-black tracking-wide transition-all duration-300 flex items-center gap-1.5 ${
+                selectedTypeFilter === 'silencieux'
+                  ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-[0_4px_12px_rgba(168,85,247,0.3)]'
+                  : 'text-slate-400 hover:text-slate-200'
+              }`}
+            >
+              🤫 Silent
+            </button>
+            <button
+              onClick={() => setSelectedTypeFilter('collaboratif')}
+              className={`px-4 py-2 rounded-xl text-xs font-black tracking-wide transition-all duration-300 flex items-center gap-1.5 ${
+                selectedTypeFilter === 'collaboratif'
+                  ? 'bg-gradient-to-r from-teal-600 to-emerald-600 text-white shadow-[0_4px_12px_rgba(13,148,136,0.3)]'
+                  : 'text-slate-400 hover:text-slate-200'
+              }`}
+            >
+              🤝 Collaborative
+            </button>
+          </div>
 
-        {navigator.geolocation && (
-          <button
-            onClick={requestUserLocation}
-            className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white hover:from-blue-700 hover:to-indigo-700 px-5 py-2.5 rounded-xl font-bold shadow-md hover:shadow-lg transition-all flex items-center gap-2 text-xs self-end sm:self-auto"
-          >
-            <Locate className="w-4 h-4" />
-            My Location
-          </button>
-        )}
-      </div>
+          {navigator.geolocation && (
+            <button
+              onClick={requestUserLocation}
+              className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white hover:from-blue-700 hover:to-indigo-700 px-5 py-2.5 rounded-xl font-bold shadow-md hover:shadow-lg transition-all flex items-center gap-2 text-xs self-end sm:self-auto"
+            >
+              <Locate className="w-4 h-4" />
+              My Location
+            </button>
+          )}
+        </div>
+      )}
 
       <div className="flex-1 flex overflow-hidden relative">
         {/* Leaflet Map container */}
         <div className="flex-1 h-full z-10">
           <MapContainer center={mapCenter} zoom={13} className="w-full h-full">
             <TileLayer
-              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+              url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
             />
             <ChangeView center={mapCenter} />
 
@@ -422,22 +431,32 @@ export function MapPage() {
         {/* Space details sidebar */}
         <AnimatePresence>
           {selectedSpace && (
-            <motion.div
-              initial={{ x: 400 }}
-              animate={{ x: 0 }}
-              exit={{ x: 400 }}
-              className="absolute right-0 top-0 bottom-0 w-96 bg-white border-l overflow-auto shadow-2xl z-20 flex flex-col"
-            >
-              <div className="p-6 flex-1">
-                <div className="flex items-start justify-between mb-2">
-                  <h2 className="text-2xl font-bold text-gray-800 leading-snug">{selectedSpace.name}</h2>
-                  <button
-                    onClick={() => setSelectedSpace(null)}
-                    className="p-2 hover:bg-gray-100 rounded-lg transition-colors flex-shrink-0"
-                  >
-                    <X className="w-5 h-5" />
-                  </button>
-                </div>
+            <>
+              {/* Backdrop overlay to catch click-outside events and close the panel */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 0.4 }}
+                exit={{ opacity: 0 }}
+                className="absolute inset-0 bg-slate-950/40 z-[15] cursor-pointer"
+                onClick={() => setSelectedSpace(null)}
+              />
+              <motion.div
+                initial={{ x: 400 }}
+                animate={{ x: 0 }}
+                exit={{ x: 400 }}
+                className="absolute right-0 top-0 bottom-0 w-full sm:w-96 bg-white border-l overflow-auto shadow-2xl z-20 flex flex-col"
+              >
+                <div className="p-6 flex-1">
+                  <div className="flex items-center gap-2 mb-2">
+                    <button
+                      onClick={() => setSelectedSpace(null)}
+                      className="p-2 hover:bg-gray-150 rounded-xl transition-all text-gray-500 hover:text-gray-850 flex-shrink-0"
+                      aria-label="Back to map"
+                    >
+                      <ArrowLeft className="w-5 h-5" />
+                    </button>
+                    <h2 className="text-xl font-bold text-gray-800 leading-snug truncate">{selectedSpace.name}</h2>
+                  </div>
 
                 {/* Space Type Badge */}
                 <div className="mb-4">
@@ -585,6 +604,7 @@ export function MapPage() {
                 </button>
               </div>
             </motion.div>
+            </>
           )}
         </AnimatePresence>
       </div>

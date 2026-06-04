@@ -1,3 +1,8 @@
+/**
+ * @file collapsible.tsx
+ * @description Collapsible UI component. Discloses underlying contents when expanded via interactive triggers.
+ */
+
 "use client";
 
 import * as CollapsiblePrimitive from "@radix-ui/react-collapsible";

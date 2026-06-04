@@ -1,8 +1,17 @@
+/**
+ * @file database.js
+ * @description Strapi database connection configurations.
+ * Supports multiple dialect clients (SQLite, PostgreSQL, MySQL) driven by environment variables,
+ * including connection timeout configurations and connection pooling thresholds.
+ */
+
 const path = require('path');
 
 module.exports = ({ env }) => {
+  // Determine database client dialect (defaults to sqlite)
   const client = env('DATABASE_CLIENT', 'sqlite');
 
+  // Connection configurations for available database types
   const connections = {
     mysql: {
       connection: {

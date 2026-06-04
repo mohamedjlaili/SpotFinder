@@ -1,3 +1,8 @@
+/**
+ * @file card.tsx
+ * @description Card UI component. Structured layout panels containing header, body, and footer content.
+ */
+
 import * as React from "react";
 
 import { cn } from "./utils";

@@ -1,8 +1,12 @@
-'use strict';
-
 /**
- * message controller
+ * @file message.js
+ * @description Custom controller for the Message API endpoint.
+ * Extends the default Strapi core controller. Overrides the `find` and `create` actions 
+ * to handle secure, direct user-to-user message binding, populating sender/receiver 
+ * details while bypassing heavy relations.
  */
+
+'use strict';
 
 const { createCoreController } = require('@strapi/strapi').factories;
 

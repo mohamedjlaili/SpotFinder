@@ -1,3 +1,9 @@
+/**
+ * @file SignupPage.tsx
+ * @description Sign up/Registration page view. Collects user profile details (Name, Email, password)
+ * and registers them via AuthContext, routing to the dashboard overview on success.
+ */
+
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router';
 import { useAuth } from '../../contexts/AuthContext';
@@ -5,12 +11,18 @@ import { UserPlus, Mail, Lock, User, AlertCircle, Eye, EyeOff } from 'lucide-rea
 import { motion } from 'motion/react';
 import appLogo from '../../assets/logo.png';
 
+/**
+ * SignupPage page view component.
+ * 
+ * @function SignupPage
+ * @returns {JSX.Element}
+ */
 export function SignupPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [name, setName] = useState('');
-  const role = 'user';
+  const role = 'user'; // Defaults to user role on self-signup
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);

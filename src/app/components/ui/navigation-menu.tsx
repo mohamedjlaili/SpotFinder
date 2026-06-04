@@ -1,3 +1,8 @@
+/**
+ * @file navigation-menu.tsx
+ * @description Navigation Menu UI component. Top navigation link items with animated overlay panels.
+ */
+
 import * as React from "react";
 import * as NavigationMenuPrimitive from "@radix-ui/react-navigation-menu";
 import { cva } from "class-variance-authority";

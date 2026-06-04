@@ -1,3 +1,8 @@
+/**
+ * @file sonner.tsx
+ * @description Sonner UI component. Toast message display configuration.
+ */
+
 "use client";
 
 import { useTheme } from "next-themes";

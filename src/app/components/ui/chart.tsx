@@ -1,3 +1,8 @@
+/**
+ * @file chart.tsx
+ * @description Chart UI component. Responsive container context for data visualizations.
+ */
+
 "use client";
 
 import * as React from "react";

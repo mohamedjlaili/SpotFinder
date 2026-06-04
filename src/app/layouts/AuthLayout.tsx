@@ -1,9 +1,23 @@
+/**
+ * @file AuthLayout.tsx
+ * @description Layout component for authentication routes (login, signup).
+ * Prevents authenticated users from accessing login/signup by redirecting them to the dashboard,
+ * displays a spinner while resolving the session status, and provides a styled wrapper for the Auth views.
+ */
+
 import { Outlet, Navigate } from "react-router";
 import { useAuth } from "../../contexts/AuthContext";
 
+/**
+ * Authentication layout component.
+ * 
+ * @function AuthLayout
+ * @returns {JSX.Element}
+ */
 export function AuthLayout() {
   const { user, isLoading } = useAuth();
 
+  // Show a loading screen while resolving user authentication state on mount
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-slate-50">
@@ -15,10 +29,12 @@ export function AuthLayout() {
     );
   }
 
+  // Redirect to dashboard if the user is already signed in
   if (user) {
     return <Navigate to="/dashboard" replace />;
   }
 
+  // Render child auth views (Login, Signup) inside a styled card wrapper with ambient background animations
   return (
     <div className="min-h-screen flex items-center justify-center p-6 relative overflow-hidden bg-gradient-to-br from-white via-indigo-50/10 to-white">
       {/* Premium ambient backdrop glow */}
@@ -28,8 +44,10 @@ export function AuthLayout() {
       </div>
       
       <div className="relative z-10 w-full max-w-md">
+        {/* React Router Outlet renders child routes: LoginPage or SignupPage */}
         <Outlet />
       </div>
     </div>
   );
 }
+

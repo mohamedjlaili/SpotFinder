@@ -1,3 +1,9 @@
+/**
+ * @file SpacesManagementPage.tsx
+ * @description Provides the interface for workspace managers and admins to manage coworking spaces.
+ * Enables adding new spaces, editing existing spaces, deleting spaces, uploading images, and view listing details.
+ */
+
 import { useEffect, useState } from 'react';
 import { spacesAPI, reservationsAPI, messagesAPI } from '../../utils/api';
 import { useAuth } from '../../contexts/AuthContext';
@@ -21,6 +27,14 @@ interface Space {
   type?: string;
 }
 
+/**
+ * SpacesManagementPage component.
+ * Allows managers and admins to manage coworking space profiles, upload images, 
+ * modify space information, and see current space lists.
+ * 
+ * @function SpacesManagementPage
+ * @returns {JSX.Element}
+ */
 export function SpacesManagementPage() {
   const [spaces, setSpaces] = useState<Space[]>([]);
   const [isLoading, setIsLoading] = useState(true);

@@ -1,3 +1,8 @@
+/**
+ * @file badge.tsx
+ * @description Badge UI component. Compact display element for tags, role types, or status labels.
+ */
+
 import * as React from "react";
 import { Slot } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";

@@ -1,3 +1,11 @@
+/**
+ * @file NotificationBell.tsx
+ * @description Header bell navigation icon component.
+ * Retrieves real-time messages using periodic polling, filters only message prefixes beginning with
+ * '[Notification]' directed at the current authenticated user, formats/translates details on-the-fly, 
+ * and shows an animated badge.
+ */
+
 import { useEffect, useState, useRef } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { messagesAPI } from '../../utils/api';
@@ -25,6 +33,14 @@ interface NotificationMessage {
   receiverId?: string;
 }
 
+/**
+ * NotificationBell component.
+ * Displays notifications in a dropdown card, translates notification titles/bodies, 
+ * and marks messages as read.
+ * 
+ * @function NotificationBell
+ * @returns {JSX.Element | null}
+ */
 export function NotificationBell() {
   const { user, token } = useAuth();
   const [notifications, setNotifications] = useState<NotificationMessage[]>([]);

@@ -1,8 +1,12 @@
-'use strict';
-
 /**
- * space controller
+ * @file space.js
+ * @description Custom controller for Space API endpoint.
+ * Extends default Strapi controller. Overrides `find`, `update`, `delete`, and `create` actions 
+ * to filter spaces by manager owner, bind workspace managers to created spaces, and exposes 
+ * utility endpoints for custom actions like direct password resets and email check validation.
  */
+
+'use strict';
 
 const { createCoreController } = require('@strapi/strapi').factories;
 

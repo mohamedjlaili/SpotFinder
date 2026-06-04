@@ -1,3 +1,9 @@
+/**
+ * @file StatCard.tsx
+ * @description Presentational dashboard card component displaying metric title, value, 
+ * an icon, and custom theme-aligned gradient styles. Supports optional tap events.
+ */
+
 import { motion } from 'motion/react';
 import { LucideIcon } from 'lucide-react';
 
@@ -43,6 +49,13 @@ const colorClasses = {
   },
 };
 
+/**
+ * StatCard component.
+ * Renders a stylized card with metric details, background glow gradients, and spring animations.
+ * 
+ * @function StatCard
+ * @returns {JSX.Element}
+ */
 export function StatCard({ title, value, icon: Icon, color, delay = 0, onClick }: StatCardProps) {
   const colors = colorClasses[color];
 

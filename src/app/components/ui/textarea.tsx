@@ -1,3 +1,8 @@
+/**
+ * @file textarea.tsx
+ * @description Textarea UI component. Styled multi-line form text inputs.
+ */
+
 import * as React from "react";
 
 import { cn } from "./utils";

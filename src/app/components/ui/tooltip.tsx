@@ -1,3 +1,8 @@
+/**
+ * @file tooltip.tsx
+ * @description Tooltip UI component. Informative tooltip text overlays.
+ */
+
 "use client";
 
 import * as React from "react";

@@ -1,3 +1,8 @@
+/**
+ * @file scroll-area.tsx
+ * @description Scroll Area UI component. Custom, cross-platform scrollbar container.
+ */
+
 "use client";
 
 import * as React from "react";
